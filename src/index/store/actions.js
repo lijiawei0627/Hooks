@@ -10,6 +10,7 @@ export function setFrom (from) {
 
 // 改变终点站
 export function setTo (to) {
+  console.log('to')
   return {
     type: Types.ACTION_SET_TO,
     payload: to
