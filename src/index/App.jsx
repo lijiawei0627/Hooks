@@ -1,4 +1,6 @@
-import React from 'react'
+import React, {
+  useCallback
+} from 'react'
 import { connect } from 'react-redux'
 import './App.css';
 
@@ -8,10 +10,15 @@ import HightSpeed from './HightSpeed/HightSpeed';
 import Journey from './Journey/Journey';
 import Submit from './Submit/Submit';
 
+// 避免onBack的重新渲染
+const onBack = useCallback(() => {
+  window.history.back();
+}, [])
+
 function App (props) {
   return (
     <div>
-      <Header/>
+      <Header title = "火车票" onBack = { onBack }/>
       <DepartDate/>
       <HightSpeed/>
       <Journey/>
