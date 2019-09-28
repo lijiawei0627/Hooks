@@ -98,9 +98,8 @@ export function hideDateSelector() {
 }
 
 // 调换始发站和终点站
-export function exchangeFromTo() {
-  return (dispatch, getState) => {
-      const { from, to } = getState();
+export function exchangeFromTo(from, to) {
+  return (dispatch) => {
       dispatch(setFrom(to));
       dispatch(setTo(from));
   };

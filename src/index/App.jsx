@@ -32,11 +32,11 @@ function App (props) {
     window.history.back();
   }, []);
 
-  const doExchangeFromTo = useCallback(() => {
-    exchangeFromTo()
+  const doExchangeFromTo = useCallback((from, to) => {
+    exchangeFromTo(from, to)
   }, [exchangeFromTo]);
   const doShowCitySelector = useCallback((m) => {
-    showCitySelector()
+    showCitySelector(m)
   }, [showCitySelector]);
 
   return (
@@ -63,16 +63,24 @@ function App (props) {
 }
 
 function mapStateToProps(state) {
-  return state;
+  return {
+    from: state.get('from'),
+    to: state.get('to'),
+    exchangeFromTo: state.get('exchangeFromTo'),
+    showCitySelector: state.get('showCitySelector'),
+    isCitySelectVisible: state.get('isCitySelectVisible'),
+    cityData: state.get('cityData'),
+    isLoadingCityData: state.get('isLoadingCityData')
+  };
 }
 function mapDispatchToProps (dispatch) {
   return { 
-    exchangeFromTo () {
-      const action = exchangeFromTo();
+    exchangeFromTo (from, to) {
+      const action = exchangeFromTo(from, to);
       dispatch(action)
     },
-    showCitySelector () {
-      const action = showCitySelector;
+    showCitySelector (m) {
+      const action = showCitySelector(m);
       dispatch(action)
     }
    }

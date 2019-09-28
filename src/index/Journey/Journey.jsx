@@ -20,7 +20,7 @@ function Journey (props) {
           value = { from }
         />
       </div>
-      <div className="journey-switch" onClick = { () => { exchangeFromTo() }}>
+      <div className="journey-switch" onClick = { () => { exchangeFromTo(from, to) }}>
         <img src = { switchImg } width="70" height="40" alt=""/>
       </div>
       <div className="journey-station" onClick = {() => showCitySelector(false) }>
