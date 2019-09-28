@@ -58,6 +58,7 @@ function App (props) {
         show = { isCitySelectVisible }
         data = { cityData }
         isLoading = { isLoadingCityData }
+        onBack = { onBack }
       />
     </div>
   ) 

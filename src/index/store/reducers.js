@@ -1,6 +1,7 @@
 import * as Types from './actionTypes'
 import { fromJS } from 'immutable'
 
+// 引入immutable.js，生成immutable对象，避免state被修改
 const defaultState = fromJS({
     from: '北京',
     to: '上海',
@@ -22,6 +23,8 @@ export default (state = defaultState, action) => {
     const { type, payload } = action;
     switch(type) {
         case Types.ACTION_SET_FROM:
+            // immutable对象的set方法，会结合之前immutable对象的值
+            // 和设置的值返回一个新的对象，并不修改原来state中的数据
             return state.set('from', payload);
         case Types.ACTION_SET_TO:
             return state.set('to', payload);
