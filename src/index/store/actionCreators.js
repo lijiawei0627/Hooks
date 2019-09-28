@@ -10,7 +10,6 @@ export function setFrom (from) {
 
 // 改变终点站
 export function setTo (to) {
-  console.log('to')
   return {
     type: Types.ACTION_SET_TO,
     payload: to
@@ -98,8 +97,12 @@ export function hideDateSelector() {
 }
 
 // 调换始发站和终点站
-export function exchangeFromTo(from, to) {
-  return (dispatch) => {
+export function exchangeFromTo() {
+  return (dispatch, getData) => {
+      // 通过getData获取reducers中的数据
+      const state = getData();
+      const to = state.get('to');
+      const from = state.get('from');
       dispatch(setFrom(to));
       dispatch(setTo(from));
   };

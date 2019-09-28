@@ -14,7 +14,7 @@ import CitySelector from '../common/CitySelector/CitySelector.jsx';
 import {
   exchangeFromTo,
   showCitySelector
-} from './store/actions'
+} from './store/actionCreators'
 
 
 function App (props) {
@@ -32,9 +32,10 @@ function App (props) {
     window.history.back();
   }, []);
 
-  const doExchangeFromTo = useCallback((from, to) => {
-    exchangeFromTo(from, to)
+  const doExchangeFromTo = useCallback(() => {
+    exchangeFromTo()
   }, [exchangeFromTo]);
+
   const doShowCitySelector = useCallback((m) => {
     showCitySelector(m)
   }, [showCitySelector]);
@@ -75,8 +76,8 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps (dispatch) {
   return { 
-    exchangeFromTo (from, to) {
-      const action = exchangeFromTo(from, to);
+    exchangeFromTo () {
+      const action = exchangeFromTo();
       dispatch(action)
     },
     showCitySelector (m) {

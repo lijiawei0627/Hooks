@@ -6,6 +6,7 @@ const defaultState = fromJS({
     to: '上海',
     //  城市选择浮层开关
     isCitySelectVisible: false,
+    // 选择的是始发站还是终点站
     currentSelectingLeftCity: false,
     //  城市选择浮层上所有的数据，需要异步加载 
     cityData: null,
@@ -23,7 +24,6 @@ export default (state = defaultState, action) => {
         case Types.ACTION_SET_FROM:
             return state.set('from', payload);
         case Types.ACTION_SET_TO:
-            console.log('to')
             return state.set('to', payload);
         case Types.ACTION_SET_IS_CITY_SELECTOR_VISIBLE:
             return state.set('isCitySelectVisible', payload);
