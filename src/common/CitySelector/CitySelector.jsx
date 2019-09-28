@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState,useMemo } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import './CitySelector.css'
 
 function CitySelector (props) {
   const [searchKey, setSearchKey] = useState('');
+  
+  // 性能优化
+  const key = useMemo(() => searchKey.trim(), [searchKey]);
 
-  const { show, isLoading, data, onBack } = props;
+  const { show, isLoading, cityData, onBack } = props;
 
   return (
     <div className = { classnames('city-selector', { hidden: !show }) }>
@@ -24,7 +28,7 @@ function CitySelector (props) {
         <div className="search-input-wrapper">
             <input
                 type="text"
-                value={searchKey}
+                value={ searchKey }
                 className="search-input"
                 placeholder="城市、车站的中文或拼音"
                 onChange={e => setSearchKey(e.target.value)}
@@ -33,11 +37,19 @@ function CitySelector (props) {
         <i
           onClick={() => setSearchKey('')}
           className={classnames('search-clean', {
-              hidden: searchKey.length === 0,
+              hidden: key.length === 0,
           })}>&#xf063;</i>
       </div>
     </div>
   )
+}
+
+
+CitySelector.propTypes = {
+  show: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired, 
+  cityData: PropTypes.object, 
+  onBack: PropTypes.func.isRequired
 }
 
 export default CitySelector

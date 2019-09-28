@@ -11,9 +11,11 @@ import Journey from './Journey/Journey';
 import Submit from './Submit/Submit';
 import CitySelector from '../common/CitySelector/CitySelector.jsx';
 
+
 import {
   exchangeFromTo,
-  showCitySelector
+  showCitySelector,
+  hideCitySelector
 } from './store/actionCreators'
 
 
@@ -25,7 +27,8 @@ function App (props) {
     showCitySelector,
     isCitySelectVisible,
     cityData,
-    isLoadingCityData
+    isLoadingCityData,
+    hideCitySelector
   } = props;
   // 避免onBack的重新渲染
   const onBack = useCallback(() => {
@@ -39,6 +42,10 @@ function App (props) {
   const doShowCitySelector = useCallback((m) => {
     showCitySelector(m)
   }, [showCitySelector]);
+
+  const citySelectorCbs = useCallback(() => {
+    hideCitySelector();
+  }, [hideCitySelector])
 
   return (
     <div>
@@ -56,9 +63,9 @@ function App (props) {
       </form>
       <CitySelector
         show = { isCitySelectVisible }
-        data = { cityData }
+        cityData = { cityData }
         isLoading = { isLoadingCityData }
-        onBack = { onBack }
+        onBack = { citySelectorCbs }
       />
     </div>
   ) 
@@ -77,12 +84,19 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps (dispatch) {
   return { 
+    // 切换始发站和终点站
     exchangeFromTo () {
       const action = exchangeFromTo();
       dispatch(action)
     },
+    // 打开城市选择浮层
     showCitySelector (m) {
       const action = showCitySelector(m);
+      dispatch(action)
+    },
+    // 隐藏城市选择浮层
+    hideCitySelector () {
+      const action = hideCitySelector();
       dispatch(action)
     }
    }
