@@ -15,7 +15,9 @@ import CitySelector from '../common/CitySelector/CitySelector.jsx';
 import {
   exchangeFromTo,
   showCitySelector,
-  hideCitySelector
+  hideCitySelector,
+  fetchCityData,
+  setSelectedCity
 } from './store/actionCreators'
 
 
@@ -28,7 +30,8 @@ function App (props) {
     isCitySelectVisible,
     cityData,
     isLoadingCityData,
-    hideCitySelector
+    hideCitySelector,
+    fetchCityData
   } = props;
   // 避免onBack的重新渲染
   const onBack = useCallback(() => {
@@ -43,9 +46,17 @@ function App (props) {
     showCitySelector(m)
   }, [showCitySelector]);
 
-  const citySelectorCbs = useCallback(() => {
+  const doCitySelectorCbs = useCallback(() => {
     hideCitySelector();
   }, [hideCitySelector])
+
+  const doFetchCityData = useCallback(() => {
+    fetchCityData();
+  }, [fetchCityData])
+
+  const doSetSelectedCity = useCallback(() => {
+    setSelectedCity();
+  }, [])
 
   return (
     <div>
@@ -65,7 +76,9 @@ function App (props) {
         show = { isCitySelectVisible }
         cityData = { cityData }
         isLoading = { isLoadingCityData }
-        onBack = { citySelectorCbs }
+        onBack = { doCitySelectorCbs }
+        doFetchCityData = { doFetchCityData }
+        onSelect = { doSetSelectedCity }
       />
     </div>
   ) 
@@ -97,6 +110,14 @@ function mapDispatchToProps (dispatch) {
     // 隐藏城市选择浮层
     hideCitySelector () {
       const action = hideCitySelector();
+      dispatch(action)
+    },
+    fetchCityData () {
+      const action = fetchCityData();
+      dispatch(action);
+    },
+    setSelectedCity () {
+      const action = setSelectedCity();
       dispatch(action)
     }
    }

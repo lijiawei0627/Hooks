@@ -117,7 +117,8 @@ export function setDepartDate(departDate) {
 
 export function fetchCityData() {
   return (dispatch, getState) => {
-      const { isLoadingCityData } = getState();
+      const state = getState();
+      const isLoadingCityData = state.get('isLoadingCityData');
 
       if (isLoadingCityData) {
           return;
@@ -127,7 +128,7 @@ export function fetchCityData() {
           localStorage.getItem('city_data_cache') || '{}'
       );
 
-      if (Date.now() < cache.expires) {
+      if (Date.now() > cache.expires) {
           dispatch(setCityData(cache.data));
 
           return;
@@ -147,7 +148,6 @@ export function fetchCityData() {
                       data: cityData,
                   })
               );
-
               dispatch(setIsLoadingCityData(false));
           })
           .catch(() => {

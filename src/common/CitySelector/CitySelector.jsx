@@ -1,6 +1,8 @@
-import React, { useState,useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import CityList from './CityList';
+import Suggest from './Suggest'
 
 import './CitySelector.css'
 
@@ -10,7 +12,39 @@ function CitySelector (props) {
   // 性能优化
   const key = useMemo(() => searchKey.trim(), [searchKey]);
 
-  const { show, isLoading, cityData, onBack } = props;
+  const { show, isLoading, cityData, onBack, doFetchCityData, onSelect } = props;
+
+  // 获取城市列表数据
+  useEffect(() => {
+    if (!show || cityData || isLoading) {
+        return;
+    }
+
+    doFetchCityData();
+}, [show, cityData, isLoading, doFetchCityData]);
+
+  const toAlpha = useCallback(alpha => {
+    document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
+  }, []);
+
+  // 定义渲染城市列表函数
+  const outputCitySections = () => {
+    if (isLoading) {
+        return <div>loading</div>;
+    }
+
+    if (cityData) {
+        return (
+            <CityList
+                sections={ cityData.cityList }
+                onSelect={ onSelect }
+                toAlpha={ toAlpha }
+            />
+        );
+    }
+
+    return <div>error</div>;
+};
 
   return (
     <div className = { classnames('city-selector', { hidden: !show }) }>
@@ -40,6 +74,10 @@ function CitySelector (props) {
               hidden: key.length === 0,
           })}>&#xf063;</i>
       </div>
+      {Boolean(key) && (
+        <Suggest searchKey={key} onSelect={key => onSelect(key)} />
+      )}
+      { outputCitySections() }
     </div>
   )
 }
