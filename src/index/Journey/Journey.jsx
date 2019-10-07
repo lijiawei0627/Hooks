@@ -11,6 +11,7 @@ function Journey (props) {
   } = props;
   return (
     <div className="journey">
+      {/* 始点站组件 */}
       <div className="journey-station" onClick = { () => showCitySelector(true) }>
         <input 
           readOnly
@@ -23,6 +24,7 @@ function Journey (props) {
       <div className="journey-switch" onClick = { () => exchangeFromTo() }>
         <img src = { switchImg } width="70" height="40" alt=""/>
       </div>
+      {/* 终点站组件 */}
       <div className="journey-station" onClick = {() => showCitySelector(false) }>
       <input 
           readOnly

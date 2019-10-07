@@ -62,6 +62,7 @@ AlphaIndex.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
+// 获取二十六个字母
 const alphabet = Array.from(new Array(26), (ele, index) => {
   return String.fromCharCode(65 + index);
 });

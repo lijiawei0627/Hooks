@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import CityList from './CityList';
-import Suggest from './Suggest'
+import Suggest from './Search'
 
 import './CitySelector.css'
 
@@ -25,6 +25,7 @@ function CitySelector (props) {
 
   // 完成首字母导航功能，并将它传递给AlphaIndex组件
   const toAlpha = useCallback(alpha => {
+    // Element.scrollIntoView() 方法让当前的元素滚动到浏览器窗口的可视区域内
     document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
   }, []);
 

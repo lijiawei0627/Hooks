@@ -22,9 +22,8 @@ const Suggest = memo(function Suggest(props) {
   const [result, setResult] = useState([]);
 
   useEffect(() => {
-      console.log('hello')
       fetch('/rest/search?key=' + encodeURIComponent(searchKey))
-          .then(res => res.json())
+          .then(res => console.log(res.json()))
           .then(data => {
               const { result, searchKey: sKey } = data;
 
