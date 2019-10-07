@@ -11,7 +11,7 @@ import Journey from './Journey/Journey';
 import Submit from './Submit/Submit';
 import CitySelector from '../common/CitySelector/CitySelector.jsx';
 
-
+// 取出actionCreators，用来创造action
 import {
   exchangeFromTo,
   showCitySelector,
@@ -22,6 +22,7 @@ import {
 
 
 function App (props) {
+  // 从mapDispatchToProps中取出方法
   const {
     from, 
     to,
@@ -31,7 +32,8 @@ function App (props) {
     cityData,
     isLoadingCityData,
     hideCitySelector,
-    fetchCityData
+    fetchCityData,
+    setSelectedCity
   } = props;
   // 避免onBack的重新渲染
   const onBack = useCallback(() => {
@@ -54,9 +56,9 @@ function App (props) {
     fetchCityData();
   }, [fetchCityData])
 
-  const doSetSelectedCity = useCallback(() => {
-    setSelectedCity();
-  }, [])
+  const doSetSelectedCity = useCallback((e) => {
+    setSelectedCity(e);
+  }, [setSelectedCity])
 
   return (
     <div>
@@ -100,25 +102,25 @@ function mapDispatchToProps (dispatch) {
     // 切换始发站和终点站
     exchangeFromTo () {
       const action = exchangeFromTo();
-      dispatch(action)
+      dispatch(action);
     },
     // 打开城市选择浮层
     showCitySelector (m) {
       const action = showCitySelector(m);
-      dispatch(action)
+      dispatch(action);
     },
     // 隐藏城市选择浮层
     hideCitySelector () {
       const action = hideCitySelector();
-      dispatch(action)
+      dispatch(action);
     },
     fetchCityData () {
       const action = fetchCityData();
       dispatch(action);
     },
-    setSelectedCity () {
-      const action = setSelectedCity();
-      dispatch(action)
+    setSelectedCity (city) {
+      const action = setSelectedCity(city);
+      dispatch(action);
     }
    }
 }

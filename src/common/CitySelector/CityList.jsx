@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
+// 城市个体组件
 const CityItem = memo(function CityItem(props) {
   const { name, onSelect } = props;
 
   return (
-      <li className="city-li" onClick={() => onSelect(name)}>
+      <li className="city-li" onClick = {() => onSelect(name)}>
           { name }
       </li>
   );
@@ -22,6 +23,7 @@ const CitySection = memo(function CitySection(props) {
 
   return (
       <ul className="city-ul">
+          {/* 给每一个字母标题加上data-cate=`${title}`类属性,用来进行定位 */}
           <li className="city-li" key="title" data-cate={ title }>
               { title }
           </li>
@@ -44,6 +46,7 @@ CitySection.propTypes = {
   onSelect: PropTypes.func.isRequired,
 };
 
+// 侧边栏首字母导航组件
 const AlphaIndex = memo(function AlphaIndex(props) {
   const { alpha, onClick } = props;
 

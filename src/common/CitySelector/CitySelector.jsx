@@ -23,6 +23,7 @@ function CitySelector (props) {
     doFetchCityData();
 }, [show, cityData, isLoading, doFetchCityData]);
 
+  // 完成首字母导航功能，并将它传递给AlphaIndex组件
   const toAlpha = useCallback(alpha => {
     document.querySelector(`[data-cate='${alpha}']`).scrollIntoView();
   }, []);
@@ -47,6 +48,8 @@ function CitySelector (props) {
 };
 
   return (
+    // classnames的使用，city-selector为固定样式，则以字符串形式传入。
+    // 而hidden为不固定的，则以对象传入,通过show变量来控制
     <div className = { classnames('city-selector', { hidden: !show }) }>
       <div className="city-search">
         <div className="search-back" onClick={() => onBack()}>

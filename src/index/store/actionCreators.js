@@ -69,7 +69,9 @@ export function hideCitySelector () {
 // 判断选择的是始发站还是终点站
 export function setSelectedCity (city) {
   return (dispatch, getState) => {
-    const { currentSelectingLeftCity } = getState();
+    const state = getState();
+    // 获取currentSelectingLeftCity，判断城市选择为左还是右
+    const currentSelectingLeftCity = state.get('currentSelectingLeftCity');
      
     // 如果选择的是始发站，就填入始发站，反之填入终点站
     if (currentSelectingLeftCity) {
@@ -77,6 +79,8 @@ export function setSelectedCity (city) {
     } else {
       dispatch(setTo(city))
     }
+    // 选择始发站或者终点站城市之后，关闭城市选择浮层
+    dispatch(hideCitySelector());
   }
 }
 
