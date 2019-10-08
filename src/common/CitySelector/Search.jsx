@@ -24,26 +24,32 @@ const Suggest = memo(function Suggest(props) {
   const { searchKey, onSelect, setSearchKey } = props;
 
   const [result, setResult] = useState([]);
-
+  //   定义一个时间戳startTime，用来做节流操作
+  const [startTime, setTime] = useState(0);
+  
   useEffect(() => {
-      let data = JSON.parse(localStorage.getItem('city_data_cache'));
-      let cityList = data.data.cityList;
-      let { length } = cityList;
-      // 使用cities数组存储所有城市
-      let cities = [];
-      for (let i = 0; i < length; i++) {
-          let len = cityList[i].citys ? cityList[i].citys.length : 0;
-        for (let j = 0; j < len; j++) {
-            cities.push(cityList[i].citys[j]);
+      let endTime = Date.now();
+      if (endTime - startTime > 500) {
+        setTime(endTime)
+        let data = JSON.parse(localStorage.getItem('city_data_cache'));
+        let cityList = data.data.cityList;
+        let { length } = cityList;
+        // 使用cities数组存储所有城市
+        let cities = [];
+        for (let i = 0; i < length; i++) {
+            let len = cityList[i].citys ? cityList[i].citys.length : 0;
+          for (let j = 0; j < len; j++) {
+              cities.push(cityList[i].citys[j]);
+          }
         }
+        let reg = new RegExp(searchKey, 'g');
+        let filterCity = cities.filter(item => reg.test(item.name));
+        //   
+        if (!filterCity.toString()) {
+            return;
+        }
+        setResult(filterCity);
       }
-      let reg = new RegExp(searchKey, 'g');
-      let filterCity = cities.filter(item => reg.test(item.name));
-      //   
-      if (!filterCity.toString()) {
-          return;
-      }
-      setResult(filterCity);
     //   setResult(filterCity)
     //   cities.filter((item) => {})
     //   console.log(data.data.cityList)
