@@ -79,7 +79,10 @@ function CitySelector (props) {
           })}>&#xf063;</i>
       </div>
       {Boolean(key) && (
-        <Suggest searchKey={key} onSelect={key => onSelect(key)} />
+        <Suggest 
+          searchKey={ key } 
+          onSelect={ key => onSelect(key) } 
+          setSearchKey = { setSearchKey }/>
       )}
       { outputCitySections() }
     </div>
