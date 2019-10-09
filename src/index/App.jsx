@@ -3,6 +3,7 @@ import React, {
 } from 'react'
 import { connect } from 'react-redux'
 import './App.css';
+import { h0 } from '../common/fp'
 
 import Header from '../common/Header/Header';
 import DepartDate from './DepartDate/DepartDate';
@@ -10,6 +11,7 @@ import HightSpeed from './HightSpeed/HightSpeed';
 import Journey from './Journey/Journey';
 import Submit from './Submit/Submit';
 import CitySelector from '../common/CitySelector/CitySelector.jsx';
+import DateSelector from '../common/DateSelector/DateSelector';
 
 // 取出actionCreators，用来创造action
 import {
@@ -17,7 +19,10 @@ import {
   showCitySelector,
   hideCitySelector,
   fetchCityData,
-  setSelectedCity
+  setSelectedCity,
+  hideDateSelector,
+  showDateSelector,
+  setDepartDate
 } from './store/actionCreators'
 
 
@@ -33,7 +38,12 @@ function App (props) {
     isLoadingCityData,
     hideCitySelector,
     fetchCityData,
-    setSelectedCity
+    setSelectedCity,
+    isDateSelectorVisible,
+    hideDateSelector,
+    departDate,
+    showDateSelector,
+    setDepartDate
   } = props;
   // 避免onBack的重新渲染
   const onBack = useCallback(() => {
@@ -60,18 +70,42 @@ function App (props) {
     setSelectedCity(e);
   }, [setSelectedCity])
 
+  const doHideDateSelector = useCallback(() => {
+     hideDateSelector();
+  }, [hideDateSelector])
+
+  const doShowDateSelector = useCallback(() => {
+    showDateSelector();
+  }, [showDateSelector])
+
+  // 日期选择
+  const doSelectDate = useCallback(day => {
+    if (!day) {
+        return;
+    }
+
+    if (day < h0()) {
+        return;
+    }
+    setDepartDate(day)
+    hideDateSelector();
+}, [setDepartDate, hideDateSelector]);
+
   return (
     <div>
       <Header title = "火车票" onBack = { onBack }/>
       <form action="" className = 'form'>
-        <DepartDate/>
-        <HightSpeed/>
         <Journey 
           from = { from } 
           to = { to }
           exchangeFromTo = { doExchangeFromTo }
           showCitySelector = { doShowCitySelector }
         />
+        <DepartDate 
+          time = { departDate }
+          onClick = { doShowDateSelector }
+        />
+        <HightSpeed/>
         <Submit/>
       </form>
       <CitySelector
@@ -81,6 +115,11 @@ function App (props) {
         onBack = { doCitySelectorCbs }
         doFetchCityData = { doFetchCityData }
         onSelect = { doSetSelectedCity }
+      />
+      <DateSelector
+        show = { isDateSelectorVisible }
+        onBack = { doHideDateSelector }
+        onSelect = { doSelectDate }
       />
     </div>
   ) 
@@ -94,7 +133,9 @@ function mapStateToProps(state) {
     showCitySelector: state.get('showCitySelector'),
     isCitySelectVisible: state.get('isCitySelectVisible'),
     cityData: state.get('cityData'),
-    isLoadingCityData: state.get('isLoadingCityData')
+    isLoadingCityData: state.get('isLoadingCityData'),
+    isDateSelectorVisible: state.get('isDateSelectorVisible'),
+    departDate: state.get('departDate')
   };
 }
 function mapDispatchToProps (dispatch) {
@@ -120,6 +161,19 @@ function mapDispatchToProps (dispatch) {
     },
     setSelectedCity (city) {
       const action = setSelectedCity(city);
+      dispatch(action);
+    },
+    // 隐藏日期选择浮层
+    hideDateSelector () {
+      const action = hideDateSelector();
+      dispatch(action);
+    },
+    showDateSelector () {
+      const action = showDateSelector();
+      dispatch(action);
+    },
+    setDepartDate (day) {
+      const action = setDepartDate(day);
       dispatch(action);
     }
    }

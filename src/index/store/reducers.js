@@ -16,7 +16,9 @@ const defaultState = fromJS({
     //  日期选择浮层开关
     isDateSelectorVisible: false,
     //  是否选择了高铁
-    hightSpeed: false
+    hightSpeed: false,
+    // 默认时间
+    departDate: Date.now()
  });
 
 export default (state = defaultState, action) => {
@@ -41,7 +43,7 @@ export default (state = defaultState, action) => {
         case Types.ACTION_SET_HIGH_SPEED:
             return state.set('hightSpeed', payload);
         case Types.ACTION_SET_DEPART_DATE:
-            return payload;
+            return state.set('departDate', payload)
       default:
         return state;
     }

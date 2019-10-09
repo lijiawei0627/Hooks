@@ -112,6 +112,7 @@ export function exchangeFromTo() {
   };
 }
 
+// 设置时间
 export function setDepartDate(departDate) {
   return {
       type: Types.ACTION_SET_DEPART_DATE,
@@ -119,6 +120,7 @@ export function setDepartDate(departDate) {
   };
 }
 
+// 请求城市数据
 export function fetchCityData() {
   return (dispatch, getState) => {
       const state = getState();

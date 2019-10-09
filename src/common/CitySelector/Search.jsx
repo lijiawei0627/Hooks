@@ -43,8 +43,7 @@ const Suggest = memo(function Suggest(props) {
           }
         }
         let reg = new RegExp(searchKey, 'g');
-        let filterCity = cities.filter(item => reg.test(item.name));
-        //   
+        let filterCity = cities.filter(item => reg.test(item.name));  
         if (!filterCity.toString()) {
             return;
         }
@@ -65,7 +64,7 @@ const Suggest = memo(function Suggest(props) {
     //       .catch(error => {
     //           console.log(error)
     //       })
-  }, [searchKey]);
+  }, [searchKey, startTime]);
 
   //   对搜索结果进行简单处理
   const fallBackResult = useMemo(() => {
